@@ -8,5 +8,6 @@ int main() {
 	std::cout << v2 << std::endl;
 	std::cout << v3 << std::endl;
 	std::cout << -v << std::endl;
+	std::cout << v2.dotProd(v.invert()) << std::endl;
 	return 0;
 }
