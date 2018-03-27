@@ -2,15 +2,16 @@ let SessionLoad = 1
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/Dokumente/c_workspace/Matrix
+cd /mnt/data/Dokumente/c_workspace/MatrixVect
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +5 src/main.cpp
+badd +11 src/main.cpp
 badd +21 src/vect.cpp
-badd +8 src/vect.h
+badd +77 src/vect.h
 badd +1 make:\ \*\*\*\ \[Makefile
+badd +1 src/matrix.h
 argglobal
 silent! argdel *
 $argadd src/main.cpp
@@ -25,8 +26,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winminheight=1 winminwidth=1 winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 50 + 27) / 55)
-exe '2resize ' . ((&lines * 1 + 27) / 55)
+exe '1resize ' . ((&lines * 23 + 13) / 27)
+exe '2resize ' . ((&lines * 0 + 13) / 27)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -37,7 +38,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 10 - ((9 * winheight(0) + 25) / 50)
+let s:l = 10 - ((9 * winheight(0) + 11) / 23)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -55,8 +56,8 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 wincmd w
-exe '1resize ' . ((&lines * 50 + 27) / 55)
-exe '2resize ' . ((&lines * 1 + 27) / 55)
+exe '1resize ' . ((&lines * 23 + 13) / 27)
+exe '2resize ' . ((&lines * 0 + 13) / 27)
 tabedit src/vect.h
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -71,11 +72,11 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winminheight=1 winminwidth=1 winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 50 + 27) / 55)
+exe '1resize ' . ((&lines * 23 + 13) / 27)
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
-exe '2resize ' . ((&lines * 50 + 27) / 55)
+exe '2resize ' . ((&lines * 23 + 13) / 27)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-exe '3resize ' . ((&lines * 1 + 27) / 55)
+exe '3resize ' . ((&lines * 0 + 13) / 27)
 argglobal
 setlocal fdm=manual
 setlocal fde=0
@@ -86,12 +87,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 80 - ((45 * winheight(0) + 25) / 50)
+let s:l = 77 - ((20 * winheight(0) + 11) / 23)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-80
-normal! 013|
+77
+normal! 09|
 wincmd w
 argglobal
 if bufexists('src/vect.cpp') | buffer src/vect.cpp | else | edit src/vect.cpp | endif
@@ -104,11 +105,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 25) / 50)
+let s:l = 2 - ((0 * winheight(0) + 11) / 23)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+2
 normal! 0
 wincmd w
 argglobal
@@ -122,12 +123,34 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 wincmd w
-exe '1resize ' . ((&lines * 50 + 27) / 55)
+exe '1resize ' . ((&lines * 23 + 13) / 27)
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
-exe '2resize ' . ((&lines * 50 + 27) / 55)
+exe '2resize ' . ((&lines * 23 + 13) / 27)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-exe '3resize ' . ((&lines * 1 + 27) / 55)
-tabnext 2
+exe '3resize ' . ((&lines * 0 + 13) / 27)
+tabedit src/matrix.h
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winminheight=1 winminwidth=1 winheight=1 winwidth=1
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 12) / 24)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabnext 1
 set stal=1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
