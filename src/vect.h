@@ -1,9 +1,9 @@
 #pragma once
 #include <array>
 #include <cstdlib>
+#include <iostream>
 #include <numeric>
 #include <ostream>
-#include <iostream>
 
 template <std::size_t size>
 class Vect {
@@ -36,13 +36,13 @@ class Vect {
 		}
 	}
 
-	Vect() {}
+	Vect() { data.fill(.0f); }
 
 	friend std::ostream &operator<<(std::ostream &stream, const Vect<size> v) {
 		stream << '[';
 		for (std::size_t i = 0; i < v.getSize(); i++) {
 			stream << v[i];
-			if (i != v.getSize() - 1) stream << ",";
+			if (i != v.getSize() - 1) stream << ',';
 		}
 		stream << ']';
 		return stream;
