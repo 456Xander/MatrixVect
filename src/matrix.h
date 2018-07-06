@@ -42,12 +42,12 @@ class Matrix {
 	}
 
 	friend std::ostream &operator<<(std::ostream &stream,
-									const Matrix<rows, cols> m) {
+									const Matrix<rows, cols> &m) {
 		stream << '{';
 
 		for (std::size_t i = 0; i < m.getRows(); i++) {
-			if(i != 0){
-				 stream << ' ';
+			if (i != 0) {
+				stream << ' ';
 			}
 			stream << '[';
 			for (std::size_t j = 0; j < m.getCols(); j++) {
@@ -116,4 +116,28 @@ class Matrix {
 
 		return std::make_tuple(l, u);
 	}
+};
+
+class rtMatrix {
+   private:
+	const std::size_t rows, cols;
+	_matrix_type *data;
+
+   public:
+	rtMatrix(const std::size_t rows, const std::size_t cols);
+	const std::array<std::size_t, 2> getSize() const;
+	std::size_t getRows() const { return rows; }
+	std::size_t getCols() const { return cols; }
+	const _matrix_type *operator[](const std::size_t index) const {
+		return data + (index * cols);
+	}
+	_matrix_type *operator[](const std::size_t index) {
+		return data + (index * cols);
+	}
+	friend std::ostream &operator<<(std::ostream &stream,
+									const rtMatrix &m);
+	rtMatrix operator+(const rtMatrix &o) const;
+	rtMatrix operator-(const rtMatrix &o)const ;
+	void operator+=(const rtMatrix &o);
+
 };

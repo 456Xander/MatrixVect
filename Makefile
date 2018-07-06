@@ -40,8 +40,8 @@ debug: CXXFLAGS += -O0 -ggdb
 debug: $(DEBUG_EXEC)
 	$(LN) $< ./$(EXEC_NAME)
 
-release: CFLAGS += -O2
-release: CXXFLAGSX += -O2
+release: CFLAGS += -O2 -flto
+release: CXXFLAGSX += -O2 -flto
 release: $(RELEASE_EXEC)
 	$(LN) $< ./$(EXEC_NAME)
 
