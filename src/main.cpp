@@ -28,5 +28,13 @@ int main() {
 	std::cout << "==== L ====" << std::endl << std::get<0>(lu) << std::endl;
 	std::cout << "==== H ====" << std::endl << std::get<1>(lu) << std::endl;
 
+	rtMatrix rm(m2);
+	auto lu2 = rm.lu_factors();
+	std::cout << "==================================" << std::endl;
+	std::cout << "     LU Decomposition rt size     " << std::endl;
+	std::cout << "==================================" << std::endl;
+	std::cout << "==== L ====" << std::endl << *std::get<0>(lu2) << std::endl;
+	std::cout << "==== H ====" << std::endl << *std::get<1>(lu2) << std::endl;
+
 	return 0;
 }

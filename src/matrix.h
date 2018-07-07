@@ -4,6 +4,8 @@
 #include <iostream>
 #include <tuple>
 
+#define ERROR_NEED_SQUARE_MATRIX 21
+
 typedef float _matrix_type;
 
 template <std::size_t rows, std::size_t cols>
@@ -122,9 +124,18 @@ class rtMatrix {
    private:
 	const std::size_t rows, cols;
 	_matrix_type *data;
+	const _matrix_type *dataEnd() const { return data + rows * cols; }
+	_matrix_type *dataEnd() { return data + rows * cols; }
 
    public:
 	rtMatrix(const std::size_t rows, const std::size_t cols);
+	~rtMatrix();
+	rtMatrix(const rtMatrix &o) noexcept;
+	template <std::size_t r, std::size_t c>
+	rtMatrix(const Matrix<r, c> &m) : rows(r), cols(c) {
+		data = new _matrix_type[r * c];
+		std::copy(m[0].begin(), m[r].end(), data);
+	}
 	const std::array<std::size_t, 2> getSize() const;
 	std::size_t getRows() const { return rows; }
 	std::size_t getCols() const { return cols; }
@@ -134,10 +145,10 @@ class rtMatrix {
 	_matrix_type *operator[](const std::size_t index) {
 		return data + (index * cols);
 	}
-	friend std::ostream &operator<<(std::ostream &stream,
-									const rtMatrix &m);
+	friend std::ostream &operator<<(std::ostream &stream, const rtMatrix &m);
 	rtMatrix operator+(const rtMatrix &o) const;
-	rtMatrix operator-(const rtMatrix &o)const ;
+	rtMatrix operator-(const rtMatrix &o) const;
 	void operator+=(const rtMatrix &o);
-
+	void operator-=(const rtMatrix &o);
+	std::tuple<rtMatrix *, rtMatrix *> lu_factors();
 };

@@ -46,21 +46,27 @@ void LinearEquationSolver::addEquation(const std::string equation) {
 	}
 }
 
-std::map<const std::string, float> LinearEquationSolver::getResult(){
-	//check if enough variables are given
-	//count variables
-	std::set<std::string> varnames;
-	for(auto & eqvars : variables){
-		for(var v : eqvars){
-			varnames.insert(v.name);
+std::map<const std::string, float> LinearEquationSolver::getResult() {
+	// check if enough variables are given
+	// count variables
+	std::map<const std::string &, int> varnames;
+	for (auto &eqvars : variables) {
+		int cnt = 0;
+		for (var v : eqvars) {
+			varnames.insert(std::pair<std::string, int>(v.name, cnt++));
 		}
 	}
-	if(varnames.size() != variables.size()){
-		 throw DIFF_VAR_EQ;
+	if (varnames.size() != variables.size()) {
+		throw DIFF_VAR_EQ;
 	}
 	std::size_t size = variables.size();
 	rtMatrix matrix(size, size);
-	for(std::size_t i = 0; i < size; i++){
-		
+	for (int eqnum = 0; eqnum < size; eqnum ++) {
+		auto equation = variables[eqnum];
+		for (var &var : equation) {
+			const std::string &vn = var.name;
+			int varnum = varnames[vn];
+			matrix[eqnum][varnum] = var.factor;
+		}
 	}
 }
